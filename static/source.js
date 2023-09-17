@@ -1,6 +1,10 @@
 function drawOnImage(image = null) {
     const canvasElement = document.getElementById("canvas");
 
+    canvasElement.on('path:created', function(event) {
+        document.getElementById('process_btn').removeAttribute('disabled');
+    })
+
     const context = canvasElement.getContext("2d");
 
     // if an image is present,
@@ -101,10 +105,12 @@ function drawOnImage(image = null) {
         let img_list = document.getElementById('out_images');
         img_list.replaceChildren('');
         document.getElementById('save_btn').style.display = "none";
+        document.getElementById('process_btn').setAttribute('disabled', true);
     };
 
     let isDrawing;
     canvasElement.onmousedown = (e) => {
+        document.getElementById('process_btn').removeAttribute('disabled');
         isDrawing = true;
         context.beginPath();
         context.lineWidth = size;

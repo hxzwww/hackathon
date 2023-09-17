@@ -16,10 +16,11 @@ sio.on('return', (image) => {
     document.getElementById('save_btn').style.display = "block";
 })
 
-function process() {
+function on_process_btn_clicked() {
     let canvas = document.getElementById('canvas');
     let image = canvas.toDataURL();
     sio.emit('make', image);
+    document.getElementById('process_btn').setAttribute('disabled', true);
 }
 
 async function downloadImage(imageSrc) {
