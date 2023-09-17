@@ -98,6 +98,9 @@ function drawOnImage(image = null) {
     const clearElement = document.getElementById("clear");
     clearElement.onclick = () => {
         context.clearRect(0, 0, canvasElement.width, canvasElement.height);
+        let img_list = document.getElementById('out_images');
+        img_list.replaceChildren('');
+        document.getElementById('save_btn').style.display = "none";
     };
 
     let isDrawing;
@@ -105,7 +108,6 @@ function drawOnImage(image = null) {
         isDrawing = true;
         context.beginPath();
         context.lineWidth = size;
-        context.strokeStyle = color;
         context.lineJoin = "round";
         context.lineCap = "round";
         context.moveTo(e.clientX, e.clientY);
