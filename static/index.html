@@ -2,67 +2,75 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+
 </head>
 
 
 <body>
 
+<div class="main">
 
-<div>
-    <canvas id="input_canvas" width="500" height="200" style="border: 1px solid black;"></canvas>
-</div>
+    <div>
+        <canvas id="input_canvas" width="500" height="200" style="border: 1px solid black;"></canvas>
+    </div>
 
-<br/>
+    <br/>
 
-<div style="margin-top:5px">
-    <span>
-        Size:
-    </span>
-    <input type="range" min="1" max="50" value="10" class="size" id="sizeRange"/>
-</div>
+    <div style="margin-top:0px" class="select">
+                <span>
+                    Line width:
+                </span>
+        <input type="range" min="1" max="50" value="10" class="size select" id="sizeRange"/>
+    </div>
 
-<br/>
+    <br/>
 
-<div>
-    <button id="clear">
-        Clear
-    </button>
-</div>
+    <div>
+        <button id="clear" class="btnn">
+            Clear
+        </button>
+    </div>
 
-<br/>
+    <br/>
 
-<input id="upload" type="file" accept="image/*"/>
+    <input id="upload" type="file" accept="image/*"/>
 
-<br/>
-<br/>
+    <br/>
+    <br/>
 
-<div>
-    <button id="process_btn" onclick="on_process_btn_clicked()" disabled>
-        Process
-    </button>
-</div>
+    <div>
+        <button id="process_btn" onclick="on_process_btn_clicked()" disabled class="btnn">
+            Process
+        </button>
+    </div>
 
-<br/>
-<br/>
+    <div style="margin-top: 20px;">
+        Choose image style:
+    </div>
 
-<div>
-    <canvas id="output_canvas" width="500" height="200" style="border: 1px solid" hidden></canvas>
-</div>
+    <select id='styles_list' class="select" style="margin-bottom: 20px;">
+        <option selected value="default">default</option>
+    </select>
 
-<br/>
 
-<div>
-    <button id="save_btn" onclick="save()" hidden>
-        Save
-    </button>
+    <div>
+        <canvas id="output_canvas" width="500" height="200" style="border: 1px solid" hidden></canvas>
+    </div>
+
+    <div>
+        <button id="save_btn" onclick="save()" hidden class="btnn" style="margin-top: 20px;">
+            Save
+        </button>
+    </div>
+
 </div>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.min.js"></script>
 <script src="source.js"></script>
 <script src="index.js"></script>
+<script src="on_start.js"></script>
 
 </body>
 </html>

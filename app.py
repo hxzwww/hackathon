@@ -1,6 +1,5 @@
 import socketio
 import base64
-import os
 
 
 sio = socketio.Server()
@@ -19,24 +18,30 @@ def disconnect(sid):
     print(sid, 'disconnected')
 
 
-def encode(name):
-    binary_fc = open(name, 'rb').read()
+prefix = 'static/images/'
+given_name = prefix + 'given_img.png'
+made_name = prefix + 'made_img.png'
+
+
+def encode():
+    binary_fc = open(made_name, 'rb').read()
     base64_utf8_str = base64.b64encode(binary_fc).decode('utf-8')
-    ext = name.split('.')[-1]
+    ext = made_name.split('.')[-1]
     return f'data:image/{ext};base64,{base64_utf8_str}'
 
 
-def generate(name):
+def generate():
     ...  # TODO: MODEL
-    return encode(name)
+    return encode()
 
 
 @sio.event
 def make(sid, data):
-    name = 'static/images/new.png'
-    os.remove(name)
-    data = data.replace('data:image/png;base64,', '').replace(' ', '+')
-    data = base64.b64decode(data)
-    with open(name, 'wb') as f:
-        f.write(data)
-    sio.emit('return', generate(name))
+    img, style = data
+    img = img.replace('data:image/png;base64,', '').replace(' ', '+')
+    img = base64.b64decode(img)
+    with open(given_name, 'wb') as f:
+        f.write(img)
+    with open(made_name, 'wb') as f:
+        f.write(img)
+    sio.emit('return', generate())

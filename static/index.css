@@ -1,0 +1,17 @@
+.main {
+  margin: 100px;
+}
+
+.select {
+  width: 500px;
+  margin-top: 20px;
+}
+
+.btnn {
+  width: 83px;
+}
+
+.canvas {
+  width: 200px;
+  border: black 1px;
+}

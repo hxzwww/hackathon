@@ -1,17 +1,15 @@
 const fileInput = document.querySelector("#upload");
 
-// enabling drawing on the blank canvas
+let shift = 100;
+
 drawOnImage();
 
 fileInput.addEventListener("change", async (e) => {
     const [file] = fileInput.files;
 
-    // displaying the uploaded image
     const image = document.createElement("img");
     image.src = await fileToDataUri(file);
 
-    // enabling the brush after the image
-    // has been uploaded
     image.addEventListener("load", () => {
         drawOnImage(image);
     });
@@ -43,17 +41,12 @@ function drawOnImage(image = null) {
     const outputCanvasElement = document.getElementById("output_canvas");
     const output_context = outputCanvasElement.getContext("2d");
 
-    // if an image is present,
-    // the image passed as parameter is drawn in the canvas
     if (image) {
-        const imageWidth = image.width;
-        const imageHeight = image.height;
+        let real_width = image.height / image.width * 500
+        const imageWidth = real_width;
+        const imageHeight = 200;
 
-        // rescaling the canvas element
-        inputCanvasElement.width = imageWidth;
-        inputCanvasElement.height = imageHeight;
-
-        input_context.drawImage(image, 0, 0, imageWidth, imageHeight);
+        input_context.drawImage(image, (500 - real_width) / 2, 0, imageWidth, imageHeight);
     }
 
     const clearElement = document.getElementById("clear");
@@ -63,6 +56,7 @@ function drawOnImage(image = null) {
         outputCanvasElement.style.display = "none";
         document.getElementById('save_btn').style.display = "none";
         document.getElementById('process_btn').setAttribute('disabled', true);
+        document.getElementById('styles_list').value = 'default';
     };
 
     let isDrawing;
@@ -73,12 +67,12 @@ function drawOnImage(image = null) {
         input_context.lineWidth = size;
         input_context.lineJoin = "round";
         input_context.lineCap = "round";
-        input_context.moveTo(e.clientX, e.clientY);
+        input_context.moveTo(e.clientX - shift, e.clientY - shift);
     };
 
     inputCanvasElement.onmousemove = (e) => {
         if (isDrawing) {
-            input_context.lineTo(e.clientX, e.clientY);
+            input_context.lineTo(e.clientX - shift, e.clientY - shift);
             input_context.stroke();
         }
     };
