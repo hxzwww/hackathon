@@ -1,6 +1,6 @@
 const fileInput = document.querySelector("#upload");
 
-let shift = 100;
+let shift = 20;
 
 drawOnImage();
 

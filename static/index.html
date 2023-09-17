@@ -1,18 +1,44 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <link rel="stylesheet" href="index.css">
+<!--    <link rel="stylesheet" href="index.css">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
+</style>
 
 </head>
-
-
 <body>
 
-<div class="main">
+<div class="row">
+  <div class="column">
 
     <div>
-        <canvas id="input_canvas" width="500" height="500" style="border: 1px solid black;"></canvas>
+        <canvas id="input_canvas" width="400" height="400" style="border: 1px solid black;"></canvas>
     </div>
 
     <br/>
@@ -52,10 +78,11 @@
     <select id='styles_list' class="select" style="margin-bottom: 20px;">
         <option selected value="default">default</option>
     </select>
+  </div>
 
-
+  <div class="column">
     <div>
-        <canvas id="output_canvas" width="500" height="500" style="border: 1px solid" hidden></canvas>
+        <canvas id="output_canvas" width="400" height="400" style="border: 1px solid" hidden></canvas>
     </div>
 
     <div>
@@ -63,6 +90,7 @@
             Save
         </button>
     </div>
+  </div>
 
 </div>
 
