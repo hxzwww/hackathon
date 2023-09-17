@@ -33,6 +33,8 @@ sizeElement.oninput = (e) => {
     size = e.target.value;
 };
 
+let canvas_size = 500;
+
 
 function drawOnImage(image = null) {
     const inputCanvasElement = document.getElementById("input_canvas");
@@ -42,12 +44,21 @@ function drawOnImage(image = null) {
     const output_context = outputCanvasElement.getContext("2d");
 
     if (image) {
-        let real_width = image.height / image.width * 500
-        const imageWidth = real_width;
-        const imageHeight = 200;
+        let imageWidth, imageHeight, less_size;
+        if (image.height > image.width) {
+            less_size = image.width / image.height * canvas_size;
+            imageHeight = canvas_size;
+            imageWidth = less_size;
+            input_context.drawImage(image, (canvas_size - less_size) / 2, 0, imageWidth, imageHeight);
+        } else {
+            less_size = image.height / image.width * canvas_size;
+            imageHeight = less_size;
+            imageWidth = canvas_size;
+            input_context.drawImage(image, 0, (canvas_size - less_size) / 2, imageWidth, imageHeight);
+        }
 
-        input_context.drawImage(image, (500 - real_width) / 2, 0, imageWidth, imageHeight);
     }
+
 
     const clearElement = document.getElementById("clear");
     clearElement.onclick = () => {

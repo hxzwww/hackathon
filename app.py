@@ -30,7 +30,7 @@ def encode():
     return f'data:image/{ext};base64,{base64_utf8_str}'
 
 
-def generate():
+def transform_img():
     ...  # TODO: MODEL
     return encode()
 
@@ -44,4 +44,5 @@ def make(sid, data):
         f.write(img)
     with open(made_name, 'wb') as f:
         f.write(img)
-    sio.emit('return', generate())
+    sio.emit('return', transform_img())
+
