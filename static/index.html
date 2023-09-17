@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div>
+    <canvas id="canvas" width="500" height="200" style="border: 1px solid black;"></canvas>
+</div>
+
+<br/>
+
+<div style="margin-top:5px">
+    <span>
+        Size:
+    </span>
+    <input type="range" min="1" max="50" value="10" class="size" id="sizeRange"/>
+</div>
+
+<br/>
+
+<div>
+    <button id="clear">
+        Clear
+    </button>
+</div>
+
+<br/>
+
+<input id="upload" type="file" accept="image/*"/>
+
+<br/>
+<br/>
+
+<div>
+    <button id="process" onclick="process()">
+        Process
+    </button>
+</div>
+
+
+<div id="out_images">
+
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.min.js"></script>
+<script src="source.js"></script>
+<script src="index.js"></script>
+
+</body>
+</html>
