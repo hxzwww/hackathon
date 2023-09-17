@@ -1,3 +1,7 @@
+from models.pix2pix_model import Pix2PixModel
+from torch import load
+from PIL import Image
+from torchvision import transforms
 import socketio
 import base64
 
@@ -6,6 +10,13 @@ sio = socketio.Server()
 app = socketio.WSGIApp(sio, static_files={
     '/': './static/'
 })
+
+model = Pix2PixModel().netG
+model.load_state_dict(load('./weights.pth'))
+model.eval()
+transform = transforms.Compose(
+    [transforms.Resize(256, 256), transforms.ToTensor()]
+)
 
 
 @sio.event
@@ -31,7 +42,12 @@ def encode():
 
 
 def transform_img():
-    ...  # TODO: MODEL
+    image = Image.open(given_name)
+    emoji = model(image)
+    transform_to_pil = transforms.ToPILImage()
+    emoji = transform_to_pil(emoji)
+    emoji = emoji.resize((500, 500))
+    emoji.save(made_name)
     return encode()
 
 
@@ -41,8 +57,6 @@ def make(sid, data):
     img = img.replace('data:image/png;base64,', '').replace(' ', '+')
     img = base64.b64decode(img)
     with open(given_name, 'wb') as f:
-        f.write(img)
-    with open(made_name, 'wb') as f:
         f.write(img)
     sio.emit('return', transform_img())
 
