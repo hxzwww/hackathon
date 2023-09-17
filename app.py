@@ -1,23 +1,26 @@
-from models.pix2pix_model import Pix2PixModel
 from torch import load
 from PIL import Image
 from torchvision import transforms
-from models.test_options import TestOptions
+from models.networks import define_G
+from collections import OrderedDict
 import socketio
 import base64
-
 
 sio = socketio.Server()
 app = socketio.WSGIApp(sio, static_files={
     '/': './static/'
 })
 
-opt = TestOptions().parse()
-model = Pix2PixModel(opt).netG
-model.load_state_dict(load('./weights.pth'))
+model_dict = load('models/pretrained/weights.pth')
+new_dict = OrderedDict()
+for k, v in model_dict.items():
+    new_dict["model." + k] = v
+
+model = define_G(3, 3, 64, 'unet_256', 'batch', True, 'normal', 0.02, [])
+model.load_state_dict(model_dict)
 model.eval()
 transform = transforms.Compose(
-    [transforms.Resize((256, 256)), transforms.ToTensor()]
+    [transforms.Grayscale(num_output_channels=1), transforms.Resize((256, 256)), transforms.ToTensor()]
 )
 
 
@@ -61,4 +64,3 @@ def make(sid, data):
     with open(given_name, 'wb') as f:
         f.write(img)
     sio.emit('return', transform_img())
-
