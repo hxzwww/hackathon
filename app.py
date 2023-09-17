@@ -2,6 +2,7 @@ from models.pix2pix_model import Pix2PixModel
 from torch import load
 from PIL import Image
 from torchvision import transforms
+from models.test_options import TestOptions
 import socketio
 import base64
 
@@ -11,11 +12,12 @@ app = socketio.WSGIApp(sio, static_files={
     '/': './static/'
 })
 
-model = Pix2PixModel().netG
+opt = TestOptions().parse()
+model = Pix2PixModel(opt).netG
 model.load_state_dict(load('./weights.pth'))
 model.eval()
 transform = transforms.Compose(
-    [transforms.Resize(256, 256), transforms.ToTensor()]
+    [transforms.Resize((256, 256)), transforms.ToTensor()]
 )
 
 
