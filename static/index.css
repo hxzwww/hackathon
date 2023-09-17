@@ -3,15 +3,10 @@
 }
 
 .select {
-  width: 500px;
+  width: 400px;
   margin-top: 20px;
 }
 
 .btnn {
   width: 83px;
-}
-
-.canvas {
-  width: 200px;
-  border: black 1px;
 }

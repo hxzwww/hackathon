@@ -46,7 +46,7 @@ def transform_img():
     emoji = model(image)
     transform_to_pil = transforms.ToPILImage()
     emoji = transform_to_pil(emoji)
-    emoji = emoji.resize((500, 500))
+    emoji = emoji.resize((400, 400))
     emoji.save(made_name)
     return encode()
 
