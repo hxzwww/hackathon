@@ -23,7 +23,7 @@ sio.on('return', (image) => {
 function on_process_btn_clicked() {
     let canvas = document.getElementById('input_canvas');
     let image = canvas.toDataURL();
-    sio.emit('make', image);
+    sio.emit('process_img', image);
     document.getElementById('output_canvas').style.display = "block";
     document.getElementById('process_btn').setAttribute('disabled', true);
 }

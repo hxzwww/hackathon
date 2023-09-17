@@ -26,17 +26,17 @@ def encode(name):
     return f'data:image/{ext};base64,{base64_utf8_str}'
 
 
-def generate(name):
+def transform_img(name):
     ...  # TODO: MODEL
     return encode(name)
 
 
 @sio.event
-def make(sid, data):
+def process_img(sid, data):
     name = 'static/images/new.png'
     os.remove(name)
     data = data.replace('data:image/png;base64,', '').replace(' ', '+')
     data = base64.b64decode(data)
     with open(name, 'wb') as f:
         f.write(data)
-    sio.emit('return', generate(name))
+    sio.emit('return', transform_img(name))
