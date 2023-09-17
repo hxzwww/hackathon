@@ -1,44 +1,3 @@
-function drawOnImage(image = null) {
-    const canvasElement = document.getElementById("canvas");
-
-    const context = canvasElement.getContext("2d");
-
-    // if an image is present,
-    // the image passed as a parameter is drawn in the canvas
-    if (image) {
-        const imageWidth = image.width;
-        const imageHeight = image.height;
-        // rescaling the canvas element
-        canvasElement.width = imageWidth;
-        canvasElement.height = imageHeight;
-        context.drawImage(image, 0, 0, imageWidth, imageHeight);
-    }
-
-    let isDrawing;
-    canvasElement.onmousedown = (e) => {
-        isDrawing = true;
-        context.beginPath();
-        context.lineWidth = 10;
-        context.strokeStyle = "black";
-        context.lineJoin = "round";
-        context.lineCap = "round";
-        context.moveTo(e.clientX, e.clientY);
-    };
-
-    canvasElement.onmousemove = (e) => {
-        if (isDrawing) {
-            context.lineTo(e.clientX, e.clientY);
-            context.stroke();
-        }
-    };
-
-    canvasElement.onmouseup = function () {
-        isDrawing = false;
-        context.closePath();
-    };
-}
-
-
 const fileInput = document.querySelector("#upload");
 
 // enabling drawing on the blank canvas
@@ -78,9 +37,11 @@ sizeElement.oninput = (e) => {
 
 
 function drawOnImage(image = null) {
-    const canvasElement = document.getElementById("canvas");
+    const inputCanvasElement = document.getElementById("input_canvas");
+    const input_context = inputCanvasElement.getContext("2d");
 
-    const context = canvasElement.getContext("2d");
+    const outputCanvasElement = document.getElementById("output_canvas");
+    const output_context = outputCanvasElement.getContext("2d");
 
     // if an image is present,
     // the image passed as parameter is drawn in the canvas
@@ -89,39 +50,41 @@ function drawOnImage(image = null) {
         const imageHeight = image.height;
 
         // rescaling the canvas element
-        canvasElement.width = imageWidth;
-        canvasElement.height = imageHeight;
+        inputCanvasElement.width = imageWidth;
+        inputCanvasElement.height = imageHeight;
 
-        context.drawImage(image, 0, 0, imageWidth, imageHeight);
+        input_context.drawImage(image, 0, 0, imageWidth, imageHeight);
     }
 
     const clearElement = document.getElementById("clear");
     clearElement.onclick = () => {
-        context.clearRect(0, 0, canvasElement.width, canvasElement.height);
-        let img_list = document.getElementById('out_images');
-        img_list.replaceChildren('');
+        input_context.clearRect(0, 0, inputCanvasElement.width, inputCanvasElement.height);
+        output_context.clearRect(0, 0, outputCanvasElement.width, outputCanvasElement.height);
+        outputCanvasElement.style.display = "none";
         document.getElementById('save_btn').style.display = "none";
+        document.getElementById('process_btn').setAttribute('disabled', true);
     };
 
     let isDrawing;
-    canvasElement.onmousedown = (e) => {
+    inputCanvasElement.onmousedown = (e) => {
+        document.getElementById('process_btn').removeAttribute('disabled');
         isDrawing = true;
-        context.beginPath();
-        context.lineWidth = size;
-        context.lineJoin = "round";
-        context.lineCap = "round";
-        context.moveTo(e.clientX, e.clientY);
+        input_context.beginPath();
+        input_context.lineWidth = size;
+        input_context.lineJoin = "round";
+        input_context.lineCap = "round";
+        input_context.moveTo(e.clientX, e.clientY);
     };
 
-    canvasElement.onmousemove = (e) => {
+    inputCanvasElement.onmousemove = (e) => {
         if (isDrawing) {
-            context.lineTo(e.clientX, e.clientY);
-            context.stroke();
+            input_context.lineTo(e.clientX, e.clientY);
+            input_context.stroke();
         }
     };
 
-    canvasElement.onmouseup = function () {
+    inputCanvasElement.onmouseup = function () {
         isDrawing = false;
-        context.closePath();
+        input_context.closePath();
     };
 }
