@@ -11,15 +11,20 @@ sio.on('disconnect', () => {
 sio.on('return', (image) => {
     let n_img = new Image();
     n_img.src = image;
-    let img_list = document.getElementById('out_images');
-    img_list.replaceChildren(n_img);
+    var output_canvas = document.getElementById('output_canvas'),
+    context = output_canvas.getContext('2d');
+    n_img.onload = () => {
+        console.log("AAAA: ", image);
+        context.drawImage(n_img, 0, 0);
+    }
     document.getElementById('save_btn').style.display = "block";
 })
 
 function on_process_btn_clicked() {
-    let canvas = document.getElementById('canvas');
+    let canvas = document.getElementById('input_canvas');
     let image = canvas.toDataURL();
     sio.emit('make', image);
+    document.getElementById('output_canvas').style.display = "block";
     document.getElementById('process_btn').setAttribute('disabled', true);
 }
 
@@ -37,8 +42,8 @@ async function downloadImage(imageSrc) {
 }
 
 function save() {
-    let processed_img = document.getElementById('out_images');
-    let image = processed_img.firstChild.getAttribute('src');
+    let output_canvas = document.getElementById('output_canvas');
+    let image = output_canvas.toDataURL();
     console.log("Image: ", image);
     downloadImage(image);
 }

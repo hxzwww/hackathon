@@ -3,7 +3,7 @@
 <body>
 
 <div>
-    <canvas id="canvas" width="500" height="200" style="border: 1px solid black;"></canvas>
+    <canvas id="input_canvas" width="500" height="200" style="border: 1px solid black;"></canvas>
 </div>
 
 <br/>
@@ -36,10 +36,14 @@
     </button>
 </div>
 
+<br/>
+<br/>
 
-<div id="out_images">
-
+<div>
+    <canvas id="output_canvas" width="500" height="200" style="border: 1px solid" hidden></canvas>
 </div>
+
+<br/>
 
 <div>
     <button id="save_btn" onclick="save()" hidden>
