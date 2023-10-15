@@ -1,6 +1,8 @@
 # hackathon
 
-#### EASY STEPS:
+Creating a app which can convert user scetch to emoji
+
+#### App using:
 
 `python -m venv .venv`
 
